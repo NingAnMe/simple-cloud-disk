@@ -1,0 +1,9 @@
+{% if latest_video_list %}
+    <ul>
+    {% for video in latest_video_list %}
+        <li><a href="/video/{{ video.id }}/">{{ video.video_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

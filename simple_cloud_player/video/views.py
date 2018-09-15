@@ -1,8 +1,13 @@
 from django.http import HttpResponse
+from django.shortcuts import render
+
+from .models import Video
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    latest_video_list = Video.objects.order_by('-create_date')[:5]
+    context = {'latest_video_list': latest_video_list,}
+    return render(request, 'video/index.html', context)
 
 
 def detail(request, video_id):
