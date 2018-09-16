@@ -8,11 +8,12 @@ from django.urls import path
 
 from . import views
 
+app_name = 'video'
 urlpatterns = [
     # ex: /video/
     path('', views.index, name='index'),
     # ex: /video/5/
     path('<int:video_id>/', views.detail, name='detail'),
     # ex: /video/5/play/
-    path('<int:video_id>/play/', views.play, name='results'),
+    path('<int:video_id>/play/', views.play, name='play'),
 ]
