@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Video
 
@@ -11,7 +11,8 @@ def index(request):
 
 
 def detail(request, video_id):
-    return HttpResponse("You're looking at video %s." % video_id)
+    video = get_object_or_404(Video, pk=video_id)
+    return render(request, 'video/detail.html', {'video': video})
 
 
 def play(request, video_id):
