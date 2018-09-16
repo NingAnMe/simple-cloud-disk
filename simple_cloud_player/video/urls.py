@@ -11,9 +11,9 @@ from . import views
 app_name = 'video'
 urlpatterns = [
     # ex: /video/
-    path('', views.index, name='index'),
+    path('', views.IndexView.as_view(), name='index'),
     # ex: /video/5/
-    path('<int:video_id>/', views.detail, name='detail'),
+    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     # ex: /video/5/play/
-    path('<int:video_id>/play/', views.play, name='play'),
+    path('<int:pk>/play/', views.PlayView.as_view(), name='play'),
 ]

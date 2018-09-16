@@ -1,19 +1,26 @@
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from django.views import generic
 
 from .models import Video
 
 
-def index(request):
-    latest_video_list = Video.objects.order_by('-create_date')[:5]
-    context = {'latest_video_list': latest_video_list,}
-    return render(request, 'video/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'video/index.html'
+    context_object_name = 'latest_video_list'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Video.objects.order_by('-create_date')[:5]
 
 
-def detail(request, video_id):
-    video = get_object_or_404(Video, pk=video_id)
-    return render(request, 'video/detail.html', {'video': video})
+class DetailView(generic.DetailView):
+    model = Video
+    template_name = 'video/detail.html'
 
 
-def play(request, video_id):
-    return HttpResponse("You're looking at play %s." % video_id)
+class PlayView(generic.DetailView):
+    model = Video
+    template_name = 'video/play.html'
