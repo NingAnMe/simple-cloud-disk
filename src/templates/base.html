@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {% if title %}
+    <title>{{ title }} - Simple Cloud Disk</title>
+    {% else %}
+    <title>Simple Cloud Disk</title>
+    {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='layui/css/layui.css') }}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">Simple Could Disk</div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="{{ url_for('index') }}">主页</a></li>
+            <li class="layui-nav-item">
+                <a href="{{ url_for('disk') }}">网盘</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">离线下载</a></dd>
+                    <dd><a href="{{ url_for('disk') }}">文件管理</a></dd>
+                    <dd><a href="">任务管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            {% if current_user.username %}
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    {{ current_user.username }}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">修改密码</a></dd>
+                    <dd><a href="{{ url_for('logout') }}">退出</a></dd>
+                </dl>
+            </li>
+            {% else %}
+            <li class="layui-nav-item"><a href="{{ url_for('disk') }}">登录</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="{{ url_for('disk') }}">网盘</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{{ url_for('disk') }}">离线下载</a></dd>
+                        <dd><a href="{{ url_for('disk') }}">文件管理</a></dd>
+                        <dd><a href="{{ url_for('disk') }}">任务管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <br>
+        <br>
+        <br>
+        <br>
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        {% block footer %}{% endblock %}
+        © Simple-Could-Disk
+    </div>
+</div>
+<!-- JS代码 start -->
+<script src="{{ url_for('static', filename='layui/layui.all.js') }}"></script>
+<!--<script>-->
+    <!--//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：-->
+    <!--;!function () {-->
+        <!--var layer = layui.layer-->
+            <!--, form = layui.form;-->
+
+        <!--layer.msg('Hello World');-->
+    <!--}();-->
+<!--</script>-->
+<!-- JS代码 end -->
+</body>
+</html>

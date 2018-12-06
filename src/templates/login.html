@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form action="" method="post" class="layui-form">
+            {{ form.hidden_tag() }}
+            <div class="layui-form-item">
+                {{ form.username.label(class_="layui-form-label") }}
+                <div class="layui-input-inline">
+                    {{ form.username(size=32, class_="layui-input") }}<br>
+                </div>
+                {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="layui-form-item">
+                {{ form.password.label(class_="layui-form-label") }}
+                <div class="layui-input-inline">
+                    {{ form.password(size=32, class_="layui-input") }}<br>
+                </div>
+                {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    {{ form.submit(class_="layui-btn") }}
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
