@@ -25,6 +25,13 @@
             </div>
 
             <div class="layui-form-item">
+                <!--{{ form.remember_me.label(class_="layui-form-label") }}-->
+                <div class="layui-input-block">
+                    {{ form.remember_me(title="记住登录") }}<br>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
                 <div class="layui-input-block">
                     {{ form.submit(class_="layui-btn") }}
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>

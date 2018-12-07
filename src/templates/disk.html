@@ -2,5 +2,13 @@
 
 
 {% block content %}
-<!-- 内容主体区域 -->
+<ul>
+    {% for d in dirs %}
+    <li>{{ d }}</li>
+    {% endfor %}
+
+    {% for f in files %}
+    <li>{{ f }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}

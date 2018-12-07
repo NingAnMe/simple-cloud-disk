@@ -1,3 +1,5 @@
+import os
+
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -5,6 +7,7 @@ from werkzeug.urls import url_parse
 from . import app, db
 from .form import LoginForm, RegistrationForm
 from .models import User, Job
+from .utils import delete_admin, get_disk_main_dir, get_dirs_files
 
 
 @app.route('/')
@@ -15,12 +18,23 @@ def index():
 @app.route('/disk', methods=['GET', 'POST'])
 @login_required
 def disk():
-    files = None
-    return render_template('disk.html', title='网盘', files=files)
+    disk_main_dir = get_disk_main_dir()
+    if not os.path.isdir(disk_main_dir):
+        os.makedirs(disk_main_dir)
+    dirs, files = get_dirs_files(disk_main_dir)
+
+    print(disk_main_dir)
+    print(dirs)
+    print(files)
+    return render_template('disk.html', title='网盘', dirs=dirs, files=files)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    账号登录
+    :return:
+    """
     if current_user.is_authenticated:
         return redirect(url_for('disk'))
     users = User.query.all()
@@ -43,6 +57,10 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    账号注册
+    :return:
+    """
     if current_user.is_authenticated:
         return redirect(url_for('disk'))
 
@@ -57,24 +75,25 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('注册成功，请记住账号密码!')
+        flash('创建管理员账号成功，请记住账号密码!')
         return redirect(url_for('login'))
     return render_template('register.html', title='注册', form=form)
 
 
 @app.route('/logout')
 def logout():
+    """
+    退出登录
+    :return:
+    """
     logout_user()
     return redirect(url_for('index'))
 
 
-def delete_admin():
-    users = User.query.all()
-    for u in users:
-        db.session.delete(u)
-    db.session.commit()
-
-
 @app.shell_context_processor
 def make_shell_context():
+    """
+    添加Flask Shell环境
+    :return:
+    """
     return {'db': db, 'User': User, 'Job': Job, 'delete_admin': delete_admin, }
