@@ -29,6 +29,20 @@ def disk():
     return render_template('disk.html', title='网盘', dirs=dirs, files=files)
 
 
+@app.route('/uri', methods=['GET', 'POST'])
+@login_required
+def uri():
+    disk_main_dir = get_disk_main_dir()
+    if not os.path.isdir(disk_main_dir):
+        os.makedirs(disk_main_dir)
+    dirs, files = get_dirs_files(disk_main_dir)
+
+    print(disk_main_dir)
+    print(dirs)
+    print(files)
+    return render_template('uri.html', title='链接下载', dirs=dirs, files=files)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """

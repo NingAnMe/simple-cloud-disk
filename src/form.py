@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextField
+from wtforms.validators import ValidationError, DataRequired, EqualTo
+
 from .models import User
 
 
@@ -22,3 +23,16 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('用户已经存在.')
+
+
+class URIForm(FlaskForm):
+    uri = TextField('下载链接', validators=[DataRequired()],
+                    render_kw={"placeholder": "支持HTTP、HTTPS、FTP、FTPS、磁力链接等"})
+    path = StringField('下载目录')
+    submit = SubmitField('提交')
+
+
+class BTForm(FlaskForm):
+    uri = TextField('下载链接', validators=[DataRequired()], render_kw={"placeholder": "test"})
+    path = StringField('下载目录', validators=[DataRequired()])
+    submit = SubmitField('提交')

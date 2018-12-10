@@ -24,6 +24,13 @@
                     <dd><a href="">任务管理</a></dd>
                 </dl>
             </li>
+            <li class="layui-nav-item">
+                <a href="{{ url_for('disk') }}">离线下载</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">链接下载</a></dd>
+                    <dd><a href="{{ url_for('disk') }}">BT下载</a></dd>
+                </dl>
+            </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             {% if current_user.username %}
@@ -78,13 +85,13 @@
 <!-- JS代码 start -->
 <script src="{{ url_for('static', filename='layui/layui.all.js') }}"></script>
 <!--<script>-->
-    <!--//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：-->
-    <!--;!function () {-->
-        <!--var layer = layui.layer-->
-            <!--, form = layui.form;-->
+<!--//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：-->
+<!--;!function () {-->
+<!--var layer = layui.layer-->
+<!--, form = layui.form;-->
 
-        <!--layer.msg('Hello World');-->
-    <!--}();-->
+<!--layer.msg('Hello World');-->
+<!--}();-->
 <!--</script>-->
 <!-- JS代码 end -->
 </body>
